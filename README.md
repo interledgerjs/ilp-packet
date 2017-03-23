@@ -19,7 +19,7 @@
 npm install ilp-packet
 ```
 
-### As a module
+### Serialize/deserialize ILP Payment Packet
 
 ```js
 const packet = require('ilp-packet')
@@ -34,4 +34,96 @@ console.log(binaryPacket.toString('hex'))
 // prints "011c000000000754d4c00e672e75732e6e657875732e626f620304104100"
 
 const jsonPacket = packet.deserializeIlpPayment(binaryPacket)
+```
+
+### Serialize/deserialize ILQP Quote Requests/Responses
+
+#### QuoteLiquidityRequest
+
+```js
+const packet = require('ilp-packet')
+
+const binary = packet.serializeIlqpLiquidityRequest({
+  requestId: 'c217449a-69e9-4a08-9575-6e7eafa818c0',
+  destinationAccount: 'example.nexus.bob',
+  destinationHoldDuration: 3000
+})
+
+const json = packet.deserializeIlqpLiquidityRequest(binary)
+```
+
+#### QuoteLiquidityResponse
+
+```js
+const packet = require('ilp-packet')
+
+const binary = packet.serializeIlqpLiquidityResponse({
+  requestId: 'c217449a-69e9-4a08-9575-6e7eafa818c0',
+  liquidityCurve: Buffer.alloc(16), // Must be a buffer of size (n * 16) bytes
+                                    // where n is the number of points in the
+                                    // curve.
+  destinationPrefix: 'example.nexus.',
+  sourceHoldDuration: 15000,
+  expiresAt: Date.now()
+})
+
+const json = packet.deserializeIlqpLiquidityResponse(binary)
+```
+
+### QuoteBySourceAmountRequest
+
+```js
+const packet = require('ilp-packet')
+
+const binary = packet.serializeIlqpBySourceAmountRequest({
+  requestId: 'c217449a-69e9-4a08-9575-6e7eafa818c0',
+  destinationAccount: 'example.nexus.bob',
+  sourceAmount: '9000000000',
+  destinationHoldDuration: 3000
+})
+
+const json = packet.deserializeIlqpBySourceAmountRequest(binary)
+```
+
+### QuoteBySourceAmountResponse
+
+```js
+const packet = require('ilp-packet')
+
+const binary = packet.serializeIlqpBySourceAmountResponse({
+  requestId: 'c217449a-69e9-4a08-9575-6e7eafa818c0',
+  destinationAmount: '9000000000',
+  sourceHoldDuration: 3000
+})
+
+const json = packet.deserializeIlqpBySourceAmountResponse(binary)
+```
+
+### QuoteByDestinationAmountRequest
+
+```js
+const packet = require('ilp-packet')
+
+const binary = packet.serializeIlqpByDestinationAmountRequest({
+  requestId: 'c217449a-69e9-4a08-9575-6e7eafa818c0',
+  destinationAccount: 'example.nexus.bob',
+  destinationAmount: '9000000000',
+  destinationHoldDuration: 3000
+})
+
+const json = packet.deserializeIlqpByDestinationAmountRequest(binary)
+```
+
+### QuoteByDestinationAmountResponse
+
+```js
+const packet = require('ilp-packet')
+
+const binary = packet.serializeIlqpByDestinationAmountResponse({
+  requestId: 'c217449a-69e9-4a08-9575-6e7eafa818c0',
+  sourceAmount: '9000000000',
+  sourceHoldDuration: 3000
+})
+
+const json = packet.deserializeIlqpByDestinationAmountResponse(binary)
 ```

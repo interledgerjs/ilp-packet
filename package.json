@@ -36,7 +36,9 @@
   },
   "homepage": "https://github.com/interledgerjs/ilp-packet#readme",
   "devDependencies": {
+    "@types/bignumber.js": "^4.0.1",
     "@types/chai": "^3.4.35",
+    "@types/lodash": "^4.14.57",
     "@types/long": "^3.0.31",
     "@types/mocha": "^2.2.39",
     "@types/node": "^7.0.5",
@@ -54,6 +56,7 @@
     "bignumber.js": "^4.0.0",
     "lodash": "^4.17.4",
     "long": "^3.2.0",
+    "node-int64": "^0.4.0",
     "nyc": "^10.1.2",
     "oer-utils": "^1.3.2"
   }
