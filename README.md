@@ -44,7 +44,6 @@ const jsonPacket = packet.deserializeIlpPayment(binaryPacket)
 const packet = require('ilp-packet')
 
 const binary = packet.serializeIlqpLiquidityRequest({
-  requestId: 'c217449a-69e9-4a08-9575-6e7eafa818c0',
   destinationAccount: 'example.nexus.bob',
   destinationHoldDuration: 3000
 })
@@ -58,7 +57,6 @@ const json = packet.deserializeIlqpLiquidityRequest(binary)
 const packet = require('ilp-packet')
 
 const binary = packet.serializeIlqpLiquidityResponse({
-  requestId: 'c217449a-69e9-4a08-9575-6e7eafa818c0',
   liquidityCurve: Buffer.alloc(16), // Must be a buffer of size (n * 16) bytes
                                     // where n is the number of points in the
                                     // curve.
@@ -76,7 +74,6 @@ const json = packet.deserializeIlqpLiquidityResponse(binary)
 const packet = require('ilp-packet')
 
 const binary = packet.serializeIlqpBySourceAmountRequest({
-  requestId: 'c217449a-69e9-4a08-9575-6e7eafa818c0',
   destinationAccount: 'example.nexus.bob',
   sourceAmount: '9000000000',
   destinationHoldDuration: 3000
@@ -91,7 +88,6 @@ const json = packet.deserializeIlqpBySourceAmountRequest(binary)
 const packet = require('ilp-packet')
 
 const binary = packet.serializeIlqpBySourceAmountResponse({
-  requestId: 'c217449a-69e9-4a08-9575-6e7eafa818c0',
   destinationAmount: '9000000000',
   sourceHoldDuration: 3000
 })
@@ -105,7 +101,6 @@ const json = packet.deserializeIlqpBySourceAmountResponse(binary)
 const packet = require('ilp-packet')
 
 const binary = packet.serializeIlqpByDestinationAmountRequest({
-  requestId: 'c217449a-69e9-4a08-9575-6e7eafa818c0',
   destinationAccount: 'example.nexus.bob',
   destinationAmount: '9000000000',
   destinationHoldDuration: 3000
@@ -120,7 +115,6 @@ const json = packet.deserializeIlqpByDestinationAmountRequest(binary)
 const packet = require('ilp-packet')
 
 const binary = packet.serializeIlqpByDestinationAmountResponse({
-  requestId: 'c217449a-69e9-4a08-9575-6e7eafa818c0',
   sourceAmount: '9000000000',
   sourceHoldDuration: 3000
 })

@@ -1,5 +1,4 @@
 import { Reader, Writer } from 'oer-utils'
-import { uuidToBuffer, bufferToUuid } from './src/utils/uuid'
 import { dateToGeneralizedTime, generalizedTimeToDate } from './src/utils/date'
 import { stringToTwoNumbers, twoNumbersToString } from './src/utils/uint64'
 import base64url from 'base64url-adhoc'
@@ -81,17 +80,12 @@ const deserializeIlpPayment = (binary: Buffer): IlpPayment => {
 }
 
 interface IlqpLiquidityRequest {
-  requestId: string,
   destinationAccount: string,
   destinationHoldDuration: number
 }
 
 const serializeIlqpLiquidityRequest = (json: IlqpLiquidityRequest) => {
   const writer = new Writer()
-
-  // requestID
-  const uuidBuffer = uuidToBuffer(json.requestId)
-  writer.write(uuidBuffer)
 
   // destinationAccount
   writer.writeVarOctetString(Buffer.from(json.destinationAccount, 'ascii'))
@@ -113,7 +107,6 @@ const deserializeIlqpLiquidityRequest = (binary: Buffer): IlqpLiquidityRequest =
   }
 
   const reader = Reader.from(contents)
-  const requestId = bufferToUuid(reader.read(16))
 
   const destinationAccount = reader.readVarOctetString().toString('ascii')
 
@@ -122,14 +115,12 @@ const deserializeIlqpLiquidityRequest = (binary: Buffer): IlqpLiquidityRequest =
   // Ignore remaining bytes for extensibility
 
   return {
-    requestId,
     destinationAccount,
     destinationHoldDuration
   }
 }
 
 interface IlqpLiquidityResponse {
-  requestId: string,
   liquidityCurve: Buffer,
   destinationPrefix: string,
   sourceHoldDuration: number,
@@ -141,10 +132,6 @@ const SIZE_OF_POINT = 16
 
 const serializeIlqpLiquidityResponse = (json: IlqpLiquidityResponse) => {
   const writer = new Writer()
-
-  // requestID
-  const uuidBuffer = uuidToBuffer(json.requestId)
-  writer.write(uuidBuffer)
 
   // liquidityCurve
   if (json.liquidityCurve.length % SIZE_OF_POINT !== 0) {
@@ -180,7 +167,6 @@ const deserializeIlqpLiquidityResponse = (binary: Buffer): IlqpLiquidityResponse
   }
 
   const reader = Reader.from(contents)
-  const requestId = bufferToUuid(reader.read(16))
 
   const numPoints = reader.readVarUInt()
   const liquidityCurve = reader.read(numPoints * SIZE_OF_POINT)
@@ -194,7 +180,6 @@ const deserializeIlqpLiquidityResponse = (binary: Buffer): IlqpLiquidityResponse
   // Ignore remaining bytes for extensibility
 
   return {
-    requestId,
     liquidityCurve,
     destinationPrefix,
     sourceHoldDuration,
@@ -203,7 +188,6 @@ const deserializeIlqpLiquidityResponse = (binary: Buffer): IlqpLiquidityResponse
 }
 
 interface IlqpBySourceRequest {
-  requestId: string,
   destinationAccount: string,
   sourceAmount: string,
   destinationHoldDuration: number,
@@ -211,10 +195,6 @@ interface IlqpBySourceRequest {
 
 const serializeIlqpBySourceRequest = (json: IlqpBySourceRequest) => {
   const writer = new Writer()
-
-  // requestID
-  const uuidBuffer = uuidToBuffer(json.requestId)
-  writer.write(uuidBuffer)
 
   // destinationAccount
   writer.writeVarOctetString(Buffer.from(json.destinationAccount, 'ascii'))
@@ -239,7 +219,6 @@ const deserializeIlqpBySourceRequest = (binary: Buffer): IlqpBySourceRequest => 
   }
 
   const reader = Reader.from(contents)
-  const requestId = bufferToUuid(reader.read(16))
 
   const destinationAccount = reader.readVarOctetString().toString('ascii')
 
@@ -250,7 +229,6 @@ const deserializeIlqpBySourceRequest = (binary: Buffer): IlqpBySourceRequest => 
   // Ignore remaining bytes for extensibility
 
   return {
-    requestId,
     destinationAccount,
     sourceAmount,
     destinationHoldDuration
@@ -258,17 +236,12 @@ const deserializeIlqpBySourceRequest = (binary: Buffer): IlqpBySourceRequest => 
 }
 
 interface IlqpBySourceResponse {
-  requestId: string,
   destinationAmount: string,
   sourceHoldDuration: number,
 }
 
 const serializeIlqpBySourceResponse = (json: IlqpBySourceResponse) => {
   const writer = new Writer()
-
-  // requestID
-  const uuidBuffer = uuidToBuffer(json.requestId)
-  writer.write(uuidBuffer)
 
   // destinationAmount
   // TODO: Proper UInt64 support
@@ -291,7 +264,6 @@ const deserializeIlqpBySourceResponse = (binary: Buffer): IlqpBySourceResponse =
   }
 
   const reader = Reader.from(contents)
-  const requestId = bufferToUuid(reader.read(16))
 
   const destinationAmount = twoNumbersToString(reader.readUInt64())
 
@@ -300,14 +272,12 @@ const deserializeIlqpBySourceResponse = (binary: Buffer): IlqpBySourceResponse =
   // Ignore remaining bytes for extensibility
 
   return {
-    requestId,
     destinationAmount,
     sourceHoldDuration
   }
 }
 
 interface IlqpByDestinationRequest {
-  requestId: string,
   destinationAccount: string,
   destinationAmount: string,
   destinationHoldDuration: number,
@@ -315,10 +285,6 @@ interface IlqpByDestinationRequest {
 
 const serializeIlqpByDestinationRequest = (json: IlqpByDestinationRequest) => {
   const writer = new Writer()
-
-  // requestID
-  const uuidBuffer = uuidToBuffer(json.requestId)
-  writer.write(uuidBuffer)
 
   // destinationAccount
   writer.writeVarOctetString(Buffer.from(json.destinationAccount, 'ascii'))
@@ -343,7 +309,6 @@ const deserializeIlqpByDestinationRequest = (binary: Buffer): IlqpByDestinationR
   }
 
   const reader = Reader.from(contents)
-  const requestId = bufferToUuid(reader.read(16))
 
   const destinationAccount = reader.readVarOctetString().toString('ascii')
 
@@ -354,7 +319,6 @@ const deserializeIlqpByDestinationRequest = (binary: Buffer): IlqpByDestinationR
   // Ignore remaining bytes for extensibility
 
   return {
-    requestId,
     destinationAccount,
     destinationAmount,
     destinationHoldDuration
@@ -362,17 +326,12 @@ const deserializeIlqpByDestinationRequest = (binary: Buffer): IlqpByDestinationR
 }
 
 interface IlqpByDestinationResponse {
-  requestId: string,
   sourceAmount: string,
   sourceHoldDuration: number,
 }
 
 const serializeIlqpByDestinationResponse = (json: IlqpByDestinationResponse) => {
   const writer = new Writer()
-
-  // requestID
-  const uuidBuffer = uuidToBuffer(json.requestId)
-  writer.write(uuidBuffer)
 
   // destinationAmount
   // TODO: Proper UInt64 support
@@ -395,7 +354,6 @@ const deserializeIlqpByDestinationResponse = (binary: Buffer): IlqpByDestination
   }
 
   const reader = Reader.from(contents)
-  const requestId = bufferToUuid(reader.read(16))
 
   const sourceAmount = twoNumbersToString(reader.readUInt64())
 
@@ -404,7 +362,6 @@ const deserializeIlqpByDestinationResponse = (binary: Buffer): IlqpByDestination
   // Ignore remaining bytes for extensibility
 
   return {
-    requestId,
     sourceAmount,
     sourceHoldDuration
   }

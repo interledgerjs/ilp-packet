@@ -1,8 +1,7 @@
 {
   "name": "example 1",
-  "binary": "051d058e460c254d435d9d5edb9f82c53aa80000000218711a0000000bb800",
+  "binary": "050d0000000218711a0000000bb800",
   "json": {
-    "requestId": "058e460c-254d-435d-9d5e-db9f82c53aa8",
     "destinationAmount": "9000000000",
     "sourceHoldDuration": 3000
   }
