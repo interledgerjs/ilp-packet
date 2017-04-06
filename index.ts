@@ -122,7 +122,7 @@ const deserializeIlqpLiquidityRequest = (binary: Buffer): IlqpLiquidityRequest =
 
 interface IlqpLiquidityResponse {
   liquidityCurve: Buffer,
-  destinationPrefix: string,
+  appliesToPrefix: string,
   sourceHoldDuration: number,
   expiresAt: Date
 }
@@ -144,8 +144,8 @@ const serializeIlqpLiquidityResponse = (json: IlqpLiquidityResponse) => {
   writer.writeVarUInt(json.liquidityCurve.length / SIZE_OF_POINT)
   writer.write(json.liquidityCurve)
 
-  // destinationPrefix
-  writer.writeVarOctetString(Buffer.from(json.destinationPrefix, 'ascii'))
+  // appliesToPrefix
+  writer.writeVarOctetString(Buffer.from(json.appliesToPrefix, 'ascii'))
 
   // sourceHoldDuration
   writer.writeUInt32(json.sourceHoldDuration)
@@ -171,7 +171,7 @@ const deserializeIlqpLiquidityResponse = (binary: Buffer): IlqpLiquidityResponse
   const numPoints = reader.readVarUInt()
   const liquidityCurve = reader.read(numPoints * SIZE_OF_POINT)
 
-  const destinationPrefix = reader.readVarOctetString().toString('ascii')
+  const appliesToPrefix = reader.readVarOctetString().toString('ascii')
 
   const sourceHoldDuration = reader.readUInt32()
 
@@ -181,7 +181,7 @@ const deserializeIlqpLiquidityResponse = (binary: Buffer): IlqpLiquidityResponse
 
   return {
     liquidityCurve,
-    destinationPrefix,
+    appliesToPrefix,
     sourceHoldDuration,
     expiresAt
   }

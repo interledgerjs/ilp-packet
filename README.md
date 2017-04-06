@@ -60,7 +60,7 @@ const binary = packet.serializeIlqpLiquidityResponse({
   liquidityCurve: Buffer.alloc(16), // Must be a buffer of size (n * 16) bytes
                                     // where n is the number of points in the
                                     // curve.
-  destinationPrefix: 'example.nexus.',
+  appliesToPrefix: 'example.nexus.',
   sourceHoldDuration: 15000,
   expiresAt: Date.now()
 })
