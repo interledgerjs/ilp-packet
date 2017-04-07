@@ -38,7 +38,7 @@ const jsonPacket = packet.deserializeIlpPayment(binaryPacket)
 
 ### Serialize/deserialize ILQP Quote Requests/Responses
 
-#### QuoteLiquidityRequest
+#### IlqpLiquidityRequest
 
 ```js
 const packet = require('ilp-packet')
@@ -51,7 +51,7 @@ const binary = packet.serializeIlqpLiquidityRequest({
 const json = packet.deserializeIlqpLiquidityRequest(binary)
 ```
 
-#### QuoteLiquidityResponse
+#### IlqpLiquidityResponse
 
 ```js
 const packet = require('ilp-packet')
@@ -68,56 +68,56 @@ const binary = packet.serializeIlqpLiquidityResponse({
 const json = packet.deserializeIlqpLiquidityResponse(binary)
 ```
 
-### QuoteBySourceAmountRequest
+### IlqpBySourceRequest
 
 ```js
 const packet = require('ilp-packet')
 
-const binary = packet.serializeIlqpBySourceAmountRequest({
+const binary = packet.serializeIlqpBySourceRequest({
   destinationAccount: 'example.nexus.bob',
   sourceAmount: '9000000000',
   destinationHoldDuration: 3000
 })
 
-const json = packet.deserializeIlqpBySourceAmountRequest(binary)
+const json = packet.deserializeIlqpBySourceRequest(binary)
 ```
 
-### QuoteBySourceAmountResponse
+### IlqpBySourceResponse
 
 ```js
 const packet = require('ilp-packet')
 
-const binary = packet.serializeIlqpBySourceAmountResponse({
+const binary = packet.serializeIlqpBySourceResponse({
   destinationAmount: '9000000000',
   sourceHoldDuration: 3000
 })
 
-const json = packet.deserializeIlqpBySourceAmountResponse(binary)
+const json = packet.deserializeIlqpBySourceResponse(binary)
 ```
 
-### QuoteByDestinationAmountRequest
+### IlqpByDestinationRequest
 
 ```js
 const packet = require('ilp-packet')
 
-const binary = packet.serializeIlqpByDestinationAmountRequest({
+const binary = packet.serializeIlqpByDestinationRequest({
   destinationAccount: 'example.nexus.bob',
   destinationAmount: '9000000000',
   destinationHoldDuration: 3000
 })
 
-const json = packet.deserializeIlqpByDestinationAmountRequest(binary)
+const json = packet.deserializeIlqpByDestinationRequest(binary)
 ```
 
-### QuoteByDestinationAmountResponse
+### IlqpByDestinationResponse
 
 ```js
 const packet = require('ilp-packet')
 
-const binary = packet.serializeIlqpByDestinationAmountResponse({
+const binary = packet.serializeIlqpByDestinationResponse({
   sourceAmount: '9000000000',
   sourceHoldDuration: 3000
 })
 
-const json = packet.deserializeIlqpByDestinationAmountResponse(binary)
+const json = packet.deserializeIlqpByDestinationResponse(binary)
 ```
