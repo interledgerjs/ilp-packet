@@ -121,3 +121,24 @@ const binary = packet.serializeIlqpByDestinationResponse({
 
 const json = packet.deserializeIlqpByDestinationResponse(binary)
 ```
+### IlpError
+
+```js
+const packet = require('ilp-packet')
+
+const binary = packet.serializeIlpError({
+  code: 'F01',
+  name: 'Invalid Packet',
+  triggeredBy: 'example.us.ledger3.bob',
+  forwardedBy: [
+    'example.us.ledger2.connie',
+    'example.us.ledger1.conrad'
+  ],
+  triggeredAt: Date.now(),
+  data: JSON.stringify({
+    foo: 'bar'
+  })
+})
+
+const json = packet.deserializeIlpError(binary)
+```
