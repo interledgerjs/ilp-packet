@@ -31,6 +31,11 @@ const deserializeEnvelope = (binary: Buffer) => {
   return { type, contents }
 }
 
+interface IlpPacket {
+  type: Type,
+  data: any
+}
+
 interface IlpPayment {
   amount: string,
   account: string,
@@ -451,17 +456,17 @@ const deserializeIlpError = (binary: Buffer): IlpError => {
   }
 }
 
-const serializeIlpPacket = (json: IlpPacket) => {
-  switch (json.type) {
-    case Type.TYPE_ILP_PAYMENT: return serializeIlpPayment(json.data)
-    case Type.TYPE_ILQP_LIQUIDITY_REQUEST: return serializeIlqpLiquidityRequest(json.data)
-    case Type.TYPE_ILQP_LIQUIDITY_RESPONSE: return serializeIlqpLiquidityResponse(json.data)
-    case Type.TYPE_ILQP_BY_SOURCE_REQUEST: return serializeIlqpBySourceRequest(json.data)
-    case Type.TYPE_ILQP_BY_SOURCE_RESPONSE: return serializeIlqpBySourceResponse(json.data)
-    case Type.TYPE_ILQP_BY_DESTINATION_REQUEST: return serializeIlqpByDestinationRequest(json.data)
-    case Type.TYPE_ILQP_BY_DESTINATION_RESPONSE: return serializeIlqpByDestinationResponse(json.data)
-    case Type.TYPE_ILP_ERROR: return serializeIlpError(json.data)
-    default: throw new Error('JSON object has invalid type')
+const serializeIlpPacket = (obj: IlpPacket) => {
+  switch (obj.type) {
+    case Type.TYPE_ILP_PAYMENT: return serializeIlpPayment(obj.data)
+    case Type.TYPE_ILQP_LIQUIDITY_REQUEST: return serializeIlqpLiquidityRequest(obj.data)
+    case Type.TYPE_ILQP_LIQUIDITY_RESPONSE: return serializeIlqpLiquidityResponse(obj.data)
+    case Type.TYPE_ILQP_BY_SOURCE_REQUEST: return serializeIlqpBySourceRequest(obj.data)
+    case Type.TYPE_ILQP_BY_SOURCE_RESPONSE: return serializeIlqpBySourceResponse(obj.data)
+    case Type.TYPE_ILQP_BY_DESTINATION_REQUEST: return serializeIlqpByDestinationRequest(obj.data)
+    case Type.TYPE_ILQP_BY_DESTINATION_RESPONSE: return serializeIlqpByDestinationResponse(obj.data)
+    case Type.TYPE_ILP_ERROR: return serializeIlpError(obj.data)
+    default: throw new Error('Object has invalid type')
   }
 }
 
