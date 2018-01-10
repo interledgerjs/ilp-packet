@@ -204,7 +204,7 @@ const binaryReject = packet.serializeIlpReject({
   code: 'F00',
   name: 'Bad Request',
   triggeredBy: 'g.us.nexus.gateway',
-  message: 'more details for connectors along the path',
-  data: Buffer.from('more details for the sender')
+  message: 'more details, human-readable',
+  data: Buffer.from('more details, machine-readable')
 })
 ```
