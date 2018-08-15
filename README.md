@@ -55,8 +55,8 @@ const condition = sha256(fulfillment)
 const binaryPrepare = IlpPacket.serializeIlpPrepare({
   amount: '10',
   executionCondition: condition,
-  destination: 'g.us.nexus.bob',
-  data: Buffer.from(['hello world']),
+  destination: 'g.us.nexus.bob', // this field was called 'account' in older packet types
+  data: Buffer.from('hello world'),
   expiresAt: new Date(new Date().getTime() + 10000)
 })
 
