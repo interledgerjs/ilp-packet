@@ -31,6 +31,10 @@ jobs:
           command: greenkeeper-lockfile-update
           
       - run:
+          name: Install
+          command: npm install
+
+      - run:
           name: Lint
           command: npm run lint
 
