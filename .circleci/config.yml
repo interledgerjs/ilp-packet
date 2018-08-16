@@ -16,9 +16,7 @@ jobs:
 
       - run:
           name: Setup NPM for global installs to home directory
-          command: |
-            npm set prefix=$HOME/npm
-            export PATH=$HOME/npm/bin:$PATH
+          command: npm set prefix=$HOME/npm
 
       - checkout
 
@@ -35,7 +33,7 @@ jobs:
 
       - run:
           name: Update Lockfile (Greenkeeper)
-          command: greenkeeper-lockfile-update
+          command: $HOME/npm/bin/greenkeeper-lockfile-update
           
       - run:
           name: Install
@@ -63,7 +61,7 @@ jobs:
 
       - run:
           name: Upload Lockfile (Greenkeeper)
-          command: greenkeeper-lockfile-upload
+          command: $HOME/npm/bin/greenkeeper-lockfile-upload
 
       - save_cache:
           paths:
