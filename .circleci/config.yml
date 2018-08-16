@@ -13,6 +13,13 @@ jobs:
   test:
     <<: *defaults  
     steps:
+
+      - run:
+          name: Setup NPM for global installs to home directory
+          command: |
+            npm set prefix=$HOME/npm
+            export PATH=$HOME/npm/bin:$PATH
+
       - checkout
 
       - restore_cache:
@@ -24,7 +31,7 @@ jobs:
 
       - run:
           name: Install Greenkeeper-Lockfile
-          command: sudo npm install -g greenkeeper-lockfile
+          command: npm install -g greenkeeper-lockfile
 
       - run:
           name: Update Lockfile (Greenkeeper)
