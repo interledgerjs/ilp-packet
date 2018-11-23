@@ -256,10 +256,22 @@ export const errorToIlpReject = (address: string, error: IlpErrorClass): IlpReje
   }
 }
 
-export function isFulfill (packet: IlpReply): packet is IlpFulfill {
-  return typeof packet['fulfillment'] !== 'undefined'
+export function isPrepare (packet: AnyIlpPacket): packet is IlpPrepare {
+  return typeof packet['amount'] === 'string' &&
+    typeof packet['expiresAt'] !== 'undefined' &&
+    typeof packet['destination'] === 'string' &&
+    Buffer.isBuffer(packet['executionCondition']) &&
+    Buffer.isBuffer(packet['data'])
 }
 
-export function isReject (packet: IlpReply): packet is IlpReject {
-  return typeof packet['code'] !== 'undefined'
+export function isFulfill (packet: AnyIlpPacket): packet is IlpFulfill {
+  return Buffer.isBuffer(packet['fulfillment']) &&
+    Buffer.isBuffer(packet['data'])
+}
+
+export function isReject (packet: AnyIlpPacket): packet is IlpReject {
+  return typeof packet['code'] === 'string' &&
+    typeof packet['triggeredBy'] === 'string' &&
+    typeof packet['message'] === 'string' &&
+    Buffer.isBuffer(packet['data'])
 }
