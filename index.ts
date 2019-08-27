@@ -4,7 +4,6 @@ import {
   interledgerTimeToDate,
   INTERLEDGER_TIME_LENGTH
 } from './src/utils/date'
-import Long = require('long')
 import * as assert from 'assert'
 
 import * as errors from './src/errors'
@@ -69,7 +68,6 @@ export const serializeIlpPrepare = (json: IlpPrepare) => {
   assert(typeof (json as Partial<IlpPrepare>).destination === 'string', 'destination is required')
   assert(!json.data || Buffer.isBuffer(json.data), 'data must be a buffer')
 
-  const amount = Long.fromString(json.amount, true)
   const expiresAt = Buffer.from(dateToInterledgerTime(json.expiresAt), 'ascii')
   const destination = Buffer.from(json.destination, 'ascii')
 
@@ -85,8 +83,7 @@ export const serializeIlpPrepare = (json: IlpPrepare) => {
   envelope.writeUInt8(Type.TYPE_ILP_PREPARE)
 
   const content = envelope.createVarOctetString(contentSize)
-  content.writeUInt32(amount.getHighBitsUnsigned())
-  content.writeUInt32(amount.getLowBitsUnsigned())
+  content.writeUInt64(json.amount)
   content.write(expiresAt)
   content.write(json.executionCondition)
   content.writeVarOctetString(destination)
@@ -103,9 +100,7 @@ export const deserializeIlpPrepare = (binary: Buffer): IlpPrepare => {
   }
 
   const reader = Reader.from(contents)
-  const highBits = reader.readUInt32Number()
-  const lowBits = reader.readUInt32Number()
-  const amount = Long.fromBits(+lowBits, +highBits, true).toString()
+  const amount = reader.readUInt64()
   const expiresAt = interledgerTimeToDate(reader.read(INTERLEDGER_TIME_LENGTH).toString('ascii'))
   const executionCondition = reader.read(32)
   const destination = reader.readVarOctetString().toString('ascii')
